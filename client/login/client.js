@@ -83,13 +83,14 @@ const ViewWindow = function(props) {
     const accNodes = props.accs.map(function(acc) {
         return (
             <div className="acc">
-                <h3 className="accName"> Name: {acc.username} </h3>
+                <h3 className="accName">{acc.username} </h3>
             </div>
         );
     });
 
     return (
         <div className="accList">
+            <h3 className="accHeader">All Users</h3>
             {accNodes}
         </div>
     );
