@@ -56,8 +56,15 @@ const getDomos = (request, response) => {
   });
 };
 
+/* WIP
+const removeDomo = (req, res) => {
+
+}
+*/
+
 module.exports = {
   makerPage,
   make: makeDomo,
   getDomos,
+  // remove: removeDomo,
 };

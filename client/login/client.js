@@ -71,6 +71,30 @@ const SignupWindow = (props) => {
     );
 }
 
+const ViewWindow = function(props) {
+    if (props.accs.length === 0) {
+        return (
+            <div className="accList">
+                <h3 classname="emptyAcc">No Accounts yet</h3>
+            </div>
+        );
+    }
+    
+    const accNodes = props.accs.map(function(acc) {
+        return (
+            <div className="acc">
+                <h3 className="accName"> Name: {acc.username} </h3>
+            </div>
+        );
+    });
+
+    return (
+        <div className="accList">
+            {accNodes}
+        </div>
+    );
+}
+
 const createLoginWindow = (csrf) => {
     ReactDOM.render(
         <LoginWindow csrf={csrf} />,
@@ -85,9 +109,27 @@ const createSignupWindow = (csrf) => {
     );
 };
 
+const createViewWindow = (csrf) => {
+    ReactDOM.render(
+        <ViewWindow accs={[]} />,
+        document.querySelector("#content")
+    );
+    loadAccFromServer();
+};
+
+const loadAccFromServer = () => {
+    sendAjax('GET', '/getAcc', null, (data) => {
+        ReactDOM.render(
+            <ViewWindow accs={data.accs} />, 
+            document.querySelector("#content")
+        );
+    });
+}
+
 const setup = (csrf) => {
     const loginButton = document.querySelector("#loginButton");
     const signupButton = document.querySelector("#signupButton");
+    const viewAccButton = document.querySelector("#viewAccButton");
 
     signupButton.addEventListener("click", (e) => {
         e.preventDefault();
@@ -98,6 +140,12 @@ const setup = (csrf) => {
     loginButton.addEventListener("click", (e) => {
         e.preventDefault();
         createLoginWindow(csrf);
+        return false;
+    });
+
+    viewAccButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        createViewWindow(csrf);
         return false;
     });
 

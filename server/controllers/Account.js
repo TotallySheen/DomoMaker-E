@@ -84,10 +84,22 @@ const getToken = (request, response) => {
   res.json(csrfJSON);
 };
 
+const getAccs = (request, response) => {
+  const req = request;
+  const res = response;
+
+  req.session.destroy();
+
+  const docs = Account.AccountModel.find().select('username').lean();
+
+  return res.json({ accs: docs });
+};
+
 module.exports = {
   loginPage,
   login,
   logout,
   signup,
   getToken,
+  getAccs,
 };
