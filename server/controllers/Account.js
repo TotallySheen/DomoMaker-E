@@ -90,9 +90,14 @@ const getAccs = (request, response) => {
 
   console.log(req);
 
-  const docs = Account.AccountModel.find().select('username').lean();
+  return Account.AccountModel.find().select('username').lean().exec((err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'An error occurred' });
+    }
 
-  return res.json({ accs: docs });
+    return res.json({ accs: docs });
+  });
 };
 
 module.exports = {
