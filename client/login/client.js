@@ -110,21 +110,13 @@ const createSignupWindow = (csrf) => {
 };
 
 const createViewWindow = (csrf) => {
-    ReactDOM.render(
-        <ViewWindow accs={[]} />,
-        document.querySelector("#content")
-    );
-    loadAccFromServer();
-};
-
-const loadAccFromServer = () => {
     sendAjax('GET', '/getAcc', null, (data) => {
         ReactDOM.render(
             <ViewWindow accs={data.accs} />, 
             document.querySelector("#content")
         );
     });
-}
+};
 
 const setup = (csrf) => {
     const loginButton = document.querySelector("#loginButton");
