@@ -88,7 +88,7 @@ const getAccs = (request, response) => {
   const req = request;
   const res = response;
 
-  req.session.destroy();
+  console.log(req);
 
   const docs = Account.AccountModel.find().select('username').lean();
 
